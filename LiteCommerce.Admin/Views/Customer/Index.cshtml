@@ -1,0 +1,141 @@
+﻿@model LiteCommerce.Admin.Models.CustomerPaginationResult
+@{
+    ViewBag.Title = "Manage Customers";
+    ViewBag.SmallTitle = "List, create, edit and delete customers";
+    ViewBag.Manage = "Catalog";
+    ViewBag.ManageDetail = "Customers";
+    int i = 1;
+}
+
+<div class="box box-header">
+    <form action="~/Customer" method="get">
+        <div class="input-group input-group-sm">
+            <input type="text" class="form-control" placeholder="Search" name="searchValue" value="@Model.SearchValue">
+            <span class="input-group-btn">
+                <button onclick="return confirm('Do you really want to delete these customers?')" type="submit" class="btn btn-info btn-flat"><div class="fa fa-search"></div></button>
+            </span>
+        </div>
+    </form>
+</div>
+<div class="box box-primary">
+    <form action="~/Customer/Delete" method="post">
+        <div class="box-body">
+            <h3 style="float: right;" class="box-title">
+                <button class="btn btn-danger mr-3"
+                        type="submit">
+                    Delete customers
+                </button>
+            </h3>
+            <h3 style="float: right; padding-right:5px" class="box-title">
+                <a class="btn btn-success mr-3"
+                   href="~/Customer/Input">Add customer</a>
+            </h3>
+            <div style="padding-top:25px;">
+                There are @Model.RowCount customer, Page @Model.Page/@Model.PageCount
+            </div>
+            <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th style="padding-left:18px;"><input type="checkbox" id="selectAll" /></th>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Address</th>
+                        <th>Contact info</th>
+                        <th style="text-align: center;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var item in Model.Data)
+                    {
+                        <tr>
+                            <td style="text-align: center;width: 50px;">
+                                <input type="checkbox" name="customerIDs" value="@item.CustomerID" />
+                            </td>
+                            <td>@(i++)</td>
+                            <td>
+                                <div class="fa fa-user"></div> @item.ContactName (<i>@item.ContactTitle</i>)
+                                <br />
+                                <div class="fa fa-university"></div> @item.CompanyName
+                            </td>
+                            <td>
+                                <div class="fa fa-address-card"></div> @item.Address
+                                <br />
+                                <div class="fa fa-address-book"></div> @item.City
+                                <br />
+                                <div class="fa fa-globe"></div> @item.Country
+                            </td>
+                            <td>
+                                <div class="fa fa-phone"></div> @item.Phone
+                                <br />
+                                <div class="fa fa-fax"></div> @item.Fax
+                            </td>
+                            <td style="text-align: center;">
+                                <div class="d-flex justify-content-center align-items-center">
+                                    <a href="~/Customer/Input/@item.CustomerID" class="btn btn-success mr-3"><i class="fa fa-edit"></i></a>
+                                    <a onclick="return confirm('Do you really want to delete this customer?');"
+                                       class="btn btn-danger"><i class="fa fa-remove"></i></a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <ul class="pagination pagination-sm no-margin pull-right">
+                @if (Model.Page > 1)
+                {
+                    <li><a href="~/Customer?page=@(Model.Page-1)&searchValue=@Model.SearchValue">«</a></li>
+                }
+                else
+                {
+                    <li class="hide"><a>«</a></li>
+                }
+                @if (Model.PageCount <= 5)
+                {
+                    for (int page = Model.Page; page <= Model.PageCount; page++)
+                    {
+                        <li><a href="~/Customer?page=@page&searchValue=@Model.SearchValue">@page</a></li>
+                    }
+                }
+                else
+                if (Model.Page == Model.PageCount || Model.Page == Model.PageCount - 1)
+                {
+                    for (int page = (Model.PageCount - 4); page <= Model.PageCount; page++)
+                    {
+
+                        <li><a href="~/Customer?page=@page&searchValue=@Model.SearchValue">@page</a></li>
+
+                    }
+                }
+                else
+                {
+                    if (Model.Page > 3)
+                    {
+                        for (int page = Model.Page - 2; page <= (Model.Page + 2); page++)
+                        {
+                            <li><a href="~/Customer?page=@page&searchValue=@Model.SearchValue">@page</a></li>
+                        }
+                    }
+                    else
+                    {
+                        for (int page = Model.Page; page <= (Model.Page + 4); page++)
+                        {
+                            <li><a href="~/Customer?page=@page&searchValue=@Model.SearchValue">@page</a></li>
+                        }
+                    }
+                }
+                @if (Model.Page < Model.PageCount)
+                {
+                    <li><a href="~/Customer?page=@(Model.Page+1)&searchValue=@Model.SearchValue">»</a></li>
+                }
+                else
+                {
+                    <li class="hide"><a>»</a></li>
+                }
+            </ul>
+        </div>
+        <!-- /.box-body -->
+    </form>
+</div>
+
+

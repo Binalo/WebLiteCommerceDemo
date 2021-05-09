@@ -1,0 +1,192 @@
+﻿@model LiteCommerce.Admin.Models.OrderPaginationResult
+@{
+    ViewBag.Title = "Manage orders";
+    ViewBag.SmallTitle = "List, create, edit, delete orders";
+    ViewBag.Manage = "Orders";
+    int i = 1;
+}
+
+<div class="box box-header">
+    <form action="~/Order" method="get">
+        <div class="input-group input-group-sm">
+            <input type="text" class="form-control" placeholder="Search" name="searchValue" value="@Model.SearchValue">
+            <span class="input-group-btn">
+                <button type="submit" class="btn btn-info btn-flat"><div class="fa fa-search"></div></button>
+            </span>
+        </div>
+    </form>
+</div>
+<div class="box box-primary">
+    <form action="~/Order/Delete" method="post">
+        <div class="box-body">
+            <h3 style="float: right;" class="box-title">
+                <button onclick="return confirm('Do you really want to delete these orders,This action cannot be undone ?')" class="btn btn-danger mr-3"
+                        type="submit">
+                    Delete orders
+                </button>
+            </h3>
+            <h3 style="float: right; padding-right:5px" class="box-title">
+                <a class="btn btn-success mr-3"
+                   href="~/Order/Create">Create order</a>
+            </h3>
+            <div style="padding-top:25px;">
+                There are @Model.RowCount Order, Page @Model.Page/@Model.PageCount
+            </div>
+            <!-- /.box-header -->
+            <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th><input type="checkbox" id="selectAll" /></th>
+                        <th>#</th>
+                        <th>Customer Name</th>
+                        <th>Employee Name</th>
+                        <th>Order date</th>
+                        <th>Required date</th>
+                        <th>Shipped date</th>
+                        <th>Shipper Company</th>
+                        <th>Ship address</th>
+                        <th>Freight</th>
+                        <th style="text-align: center;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Data)
+                    {
+                        <tr>
+                            <td><input type="checkbox" name="OrderIDs" value="@item.OrderID" /></td>
+                            <td>@(i++)</td>
+                            <td>@item.CustomerName</td>
+                            <td>@item.EmployeeName</td>
+                            <td>@string.Format("{0:yyyy-MM-dd}", item.OrderDate)</td>
+                            <td>@string.Format("{0:yyyy-MM-dd}", item.RequiredDate)</td>
+                            <td>@string.Format("{0:yyyy-MM-dd}", item.ShippedDate)</td>
+                            <td>@item.ShipperName</td>
+                            <td>
+                                <div class="fa fa-address-card"></div> @item.ShipAddress
+                                <br />
+                                <div class="fa fa-address-book"></div> @item.ShipCity
+                                <br />
+                                <div class="fa fa-globe"></div> @item.ShipCountry
+                            </td>
+                            <td>@item.Freight</td>
+                            <td style="text-align: center;">
+                                <div class="d-flex justify-content-center align-items-center">
+                                    <a class="btn btn-info" data-toggle="modal" data-target="#@item.OrderID"><i class="fa fa-info-circle"></i></a>
+                                    <a style="color: #fff"
+                                       onclick="return confirm('Do you really want to delete this order?');"
+                                       class="btn btn-danger"><i class="fa fa-remove"></i></a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <ul class="pagination pagination-sm no-margin pull-right">
+                @if (Model.Page > 1)
+                {
+                    <li><a href="~/Order?page=@(Model.Page-1)&searchValue=@Model.SearchValue">«</a></li>
+                }
+                else
+                {
+                    <li class="hide"><a>«</a></li>
+                }
+                @if (Model.PageCount <= 5)
+                {
+                    for (int page = Model.Page; page <= Model.PageCount; page++)
+                    {
+                        <li><a href="~/Order?page=@page&searchValue=@Model.SearchValue">@page</a></li>
+                    }
+                }
+                else
+                if (Model.Page == Model.PageCount || Model.Page == Model.PageCount - 1)
+                {
+                    for (int page = (Model.PageCount - 4); page <= Model.PageCount; page++)
+                    {
+
+                        <li><a href="~/Order?page=@page&searchValue=@Model.SearchValue">@page</a></li>
+
+                    }
+                }
+                else
+                {
+                    if (Model.Page > 3)
+                    {
+                        for (int page = Model.Page - 2; page <= (Model.Page + 2); page++)
+                        {
+                            <li><a href="~/Order?page=@page&searchValue=@Model.SearchValue">@page</a></li>
+                        }
+                    }
+                    else
+                    {
+                        for (int page = Model.Page; page <= (Model.Page + 4); page++)
+                        {
+                            <li><a href="~/Order?page=@page&searchValue=@Model.SearchValue">@page</a></li>
+                        }
+                    }
+                }
+                @if (Model.Page < Model.PageCount)
+                {
+                    <li><a href="~/Order?page=@(Model.Page+1)&searchValue=@Model.SearchValue">»</a></li>
+                }
+                else
+                {
+                    <li class="hide"><a>»</a></li>
+                }
+            </ul>
+
+        </div>
+    </form>
+    <!-- /.box-body -->
+</div>
+@foreach (var item in Model.Data)
+{
+    <div class="modal fade" id="@item.OrderID" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title" id="myModalLabel">Order detail</h2>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Product Name</th>
+                                <th>Unit price</th>
+                                <th>Quantity</th>
+                                <th>Discount</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach (var detailItem in Model.DetailData)
+                            {
+                                if (detailItem.OrderID == item.OrderID)
+                                {
+                                    <tr>
+                                        <td>@detailItem.ProductID</td>
+                                        <td>@detailItem.ProductName</td>
+                                        <td>@detailItem.UnitPrice</td>
+                                        <td>@detailItem.Quantity</td>
+                                        <td>@string.Format("{0:0.00}", detailItem.Discount)</td>
+                                        <td><b style="color:red;">@string.Format("{0:0.00}", detailItem.Total())</b></td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+

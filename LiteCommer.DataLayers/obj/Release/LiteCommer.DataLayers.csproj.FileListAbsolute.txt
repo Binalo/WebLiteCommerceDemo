@@ -1,0 +1,8 @@
+E:\LiteCommerce\LiteCommer.DataLayers\bin\Release\LiteCommer.DataLayers.dll
+E:\LiteCommerce\LiteCommer.DataLayers\bin\Release\LiteCommer.DataLayers.pdb
+E:\LiteCommerce\LiteCommer.DataLayers\bin\Release\LiteCommer.DomainModels.dll
+E:\LiteCommerce\LiteCommer.DataLayers\bin\Release\LiteCommer.DomainModels.pdb
+E:\LiteCommerce\LiteCommer.DataLayers\obj\Release\LiteCommer.DataLayers.csprojAssemblyReference.cache
+E:\LiteCommerce\LiteCommer.DataLayers\obj\Release\LiteCommer.DataLayers.csproj.CopyComplete
+E:\LiteCommerce\LiteCommer.DataLayers\obj\Release\LiteCommer.DataLayers.dll
+E:\LiteCommerce\LiteCommer.DataLayers\obj\Release\LiteCommer.DataLayers.pdb

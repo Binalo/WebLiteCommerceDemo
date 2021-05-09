@@ -1,0 +1,5 @@
+E:\LiteCommerce\LiteCommer.DomainModels\bin\Release\LiteCommer.DomainModels.dll
+E:\LiteCommerce\LiteCommer.DomainModels\bin\Release\LiteCommer.DomainModels.pdb
+E:\LiteCommerce\LiteCommer.DomainModels\obj\Release\LiteCommer.DomainModels.csprojAssemblyReference.cache
+E:\LiteCommerce\LiteCommer.DomainModels\obj\Release\LiteCommer.DomainModels.dll
+E:\LiteCommerce\LiteCommer.DomainModels\obj\Release\LiteCommer.DomainModels.pdb

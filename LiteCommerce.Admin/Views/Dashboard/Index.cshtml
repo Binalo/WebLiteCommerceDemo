@@ -1,0 +1,155 @@
+﻿@model LiteCommerce.Admin.Models.DashBoardModel
+@{
+    ViewBag.Title = "Dashboard";
+    ViewBag.Manage = "Dashboard";
+}
+
+<div class="box box-primary">
+    <div id="titleThongKe" style="font-size: 23px; text-align: center; padding-top: 16px;">
+        Statistics of monthly revenue in @Model.RevenueDashBoard.Year
+    </div>
+    <div class="card shadow mb-4">
+        <div class="card-body">
+            <div class="form-group">
+                <select class="text form-control" id="OrderStatistic"
+                        style="width: 100px; margin-left: auto;">
+                    @for (long i = Model.RevenueDashBoard.Year-2; i < 2021; i++)
+                    {
+                        if (i == Model.RevenueDashBoard.Year)
+                        {
+                            <option selected>@i</option>
+                        }
+                        else
+                        {
+                            <option>@i</option>
+                        }
+                    }
+                </select>
+                Total Revenue: <strong id="TTotal">@Model.RevenueDashBoard.ToTal()$</strong>
+            </div>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>January</th>
+                        <th>February</th>
+                        <th>March</th>
+                        <th>April</th>
+                        <th>May</th>
+                        <th>June</th>
+                        <th>July</th>
+                        <th>August</th>
+                        <th>September</th>
+                        <th>October</th>
+                        <th>November</th>
+                        <th>December</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr id="OrderStatistics">
+                        <td>@Model.RevenueDashBoard.January$</td>
+                        <td>@Model.RevenueDashBoard.February$</td>
+                        <td>@Model.RevenueDashBoard.March$</td>
+                        <td>@Model.RevenueDashBoard.April$</td>
+                        <td>@Model.RevenueDashBoard.May$</td>
+                        <td>@Model.RevenueDashBoard.June$</td>
+                        <td>@Model.RevenueDashBoard.July$</td>
+                        <td>@Model.RevenueDashBoard.August$</td>
+                        <td>@Model.RevenueDashBoard.September$</td>
+                        <td>@Model.RevenueDashBoard.October$</td>
+                        <td>@Model.RevenueDashBoard.November$</td>
+                        <td>@Model.RevenueDashBoard.December$</td>
+                    </tr>
+                </tbody>
+                
+            </table>
+        </div>
+    </div>
+</div>
+<div class="box">
+    <div class="box-header with-border">
+        <h3 class="box-title">Monthly Revenue Report</h3>
+
+        <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                <i class="fa fa-minus"></i>
+            </button>
+            <div class="btn-group">
+                <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
+                    <i class="fa fa-wrench"></i>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="#">Action</a></li>
+                    <li><a href="#">Another action</a></li>
+                    <li><a href="#">Something else here</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#">Separated link</a></li>
+                </ul>
+            </div>
+            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+        </div>
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body">
+        <div class="row">
+            <div class="col-md-12">
+                <p class="text-center">
+                    <strong>Sales: 1 Jan, @Model.RevenueDashBoard.Year - 30 Dec, @Model.RevenueDashBoard.Year</strong>
+                </p>
+
+                <div class="chart">
+                    <!-- Sales Chart Canvas -->
+                    <div class="card-body">
+                        <canvas id="line-chart" width="1500" height="290"></canvas>
+                        <input type="hidden" value="@Model.RevenueDashBoard.ToTal()" id='doanhThu'>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- ./box-body -->
+    <div class="box-footer">
+        <div class="row">
+            <div class="col-sm-3 col-xs-6">
+                <div class="description-block border-right">
+                    <span class="description-percentage text-green"><i class="fa fa-caret-up"></i> 17%</span>
+                    <h5 class="description-header">@Model.RevenueDashBoard.ToTal()$</h5>
+                    <span class="description-text">TOTAL REVENUE</span>
+                </div>
+                <!-- /.description-block -->
+            </div>
+            <!-- /.col -->
+            <div class="col-sm-3 col-xs-6">
+                <div class="description-block border-right">
+                    <span class="description-percentage text-yellow"><i class="fa fa-caret-left"></i> 0%</span>
+                    <h5 class="description-header">$10,390.90</h5>
+                    <span class="description-text">TOTAL Discount</span>
+                </div>
+                <!-- /.description-block -->
+            </div>
+            <!-- /.col -->
+            <div class="col-sm-3 col-xs-6">
+                <div class="description-block border-right">
+                    <span class="description-percentage text-green"><i class="fa fa-caret-up"></i> 20%</span>
+                    <h5 class="description-header">$24,813.53</h5>
+                    <span class="description-text">TOTAL PROFIT</span>
+                </div>
+                <!-- /.description-block -->
+            </div>
+            <!-- /.col -->
+            <div class="col-sm-3 col-xs-6">
+                <div class="description-block">
+                    <span class="description-percentage text-red"><i class="fa fa-caret-down"></i> 18%</span>
+                    <h5 class="description-header">1200</h5>
+                    <span class="description-text">GOAL COMPLETIONS</span>
+                </div>
+                <!-- /.description-block -->
+            </div>
+
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.box-footer -->
+</div>
+

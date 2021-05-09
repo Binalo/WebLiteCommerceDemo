@@ -1,0 +1,129 @@
+﻿@model LiteCommerce.DomainModels.Customer
+@{
+
+}
+<div class="box box-primary">
+    <div class="box-header">
+        <h3 style="float: right;" class="box-title">
+            <a class="btn btn-primary mr-3"
+               href="~/Customer">Back to list >></a>
+        </h3>
+    </div>
+    <div class="row shadow" style="padding-top:10px;">
+        <div class="col-sm-12">
+            <div>
+                <form method="post" action="~/Customer/Input">
+                    <input type="hidden" name="method" value="@ViewBag.Method" />
+                    <div class="col-sm-6 disabled">
+                        <div class="form-group">
+                            <label>CustomerID </label><i class="text-danger"> @Html.ValidationMessage("")</i>
+                            @if (ViewBag.Method == "Add")
+                            {
+                                <input type="text"
+                                       class="text form-control" placeholder="CustomerID"
+                                       name="customerID" value="">
+                            }
+                            else
+                            {
+                                <input type="text"
+                                       class="text form-control "
+                                       name="customerID" readonly value="@Model.CustomerID">
+                            }
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>Company Name</label> <input type="text"
+                                                               class="text form-control" placeholder="Company name" required
+                                                               name="companyName" value="@Model.CompanyName">
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Contact Name </label> <input type="text"
+                                                                    class="text form-control" placeholder="Name" required
+                                                                    name="contactname" value="@Model.ContactName">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Contact title </label> <input type="text"
+                                                                     class="text form-control" placeholder="Ex: Manage person" required
+                                                                     name="contactTitle" value="@Model.ContactTitle">
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Country</label>
+                                <select name="country" class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
+                                    <option value="">-- Choise your country --</option>
+                                    @foreach (var item in SelectListHelper.ListOfCountries())
+                                    {
+                                        if (item.Value == Model.Country)
+                                        {
+                                            <option value="@item.Value" selected>@item.Text</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@item.Value">@item.Text</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <label>City</label>
+                            <select name="city" class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
+                                <option value="">-- Choise your city --</option>
+                                @foreach (var item in SelectListHelper.ListOfcities())
+                                {
+                                    if (item.Value == Model.City)
+                                    {
+                                        <option value="@item.Value" selected>@item.Text</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@item.Value">@item.Text</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="col-sm-12">
+                            <label>Address</label> <input type="text"
+                                                          class="form-control" name="address"
+                                                          placeholder="Address" value="@Model.Address" required>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <label>Phone</label>
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="fa fa-phone"></i></div>
+                            <input type="text" class="form-control" name="phone" value="@Model.Phone" placeholder="Phone" required>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <label>Fax</label>
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="fa fa-fax"></i></div>
+                            <input type="text" class="form-control" name="fax" value="@Model.Fax" placeholder="Fax" required>
+                        </div>
+                    </div>
+                    <div class="form-group " style="float:right;padding-top:10px;padding-right:15px;">
+                        <button type="submit" class="btn btn-primary mb-5" name="subAdd"><div class="fa fa-save"></div> Save</button>
+                        <a href="~/Customer" class="btn btn-danger mb-5" name=""><div class="fa fa-remove"></div> Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+        @Html.ValidationMessage("");
+    </div>
+</div>
+
+

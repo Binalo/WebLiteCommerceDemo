@@ -1,0 +1,108 @@
+﻿@model LiteCommerce.DomainModels.Supplier
+
+@{
+}
+<div class="box box-primary">
+    <div class="box-header">
+        <h3 style="float: right;" class="box-title">
+            <a class="btn btn-primary mr-3"
+               href="~/Supplier">Back to list >></a>
+        </h3>
+    </div>
+    <div class="row shadow" style="padding-top:10px;">
+        <div class="col-sm-12">
+            <div>
+                <form method="post" action="~/Supplier/Input">
+                    @Html.Hidden("supplierID",Model.SupplierID.ToString())
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            @Html.Label("Company Name")
+                            @Html.TextBox("companyName", Model.CompanyName, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            @Html.Label("Contact Name")
+                            @Html.TextBox("contactName", Model.ContactName, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            @Html.Label("Contact Title")
+                            @Html.TextBox("contacttitle", Model.ContactTitle, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            @Html.Label("Country")
+                            <select name="country" class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
+                                <option value="">-- Choise your country --</option>
+                                @foreach (var item in SelectListHelper.ListOfCountries())
+                                {
+                                    if (item.Value == Model.Country)
+                                    {
+                                        <option value="@item.Value" selected>@item.Text</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@item.Value">@item.Text</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        @Html.Label("City")
+                        <select name="city" class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
+                            <option value="">-- Choise your city --</option>
+                            @foreach (var item in SelectListHelper.ListOfCountries())
+                            {
+                                if (item.Value == Model.Country)
+                                {
+                                    <option value="@item.Value" selected>@item.Text</option>
+                                }
+                                else
+                                {
+                                    <option value="@item.Value">@item.Text</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div>
+                        <div class="col-sm-12">
+                            @Html.Label("Address")
+                            @Html.TextBox("address", Model.Address, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        @Html.Label("Phone")
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="fa fa-phone"></i></div>
+                            @Html.TextBox("phone", Model.Phone, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        @Html.Label("Fax")
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="fa fa-fax"></i></div>
+                            @Html.TextBox("fax", Model.Fax, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div>
+                        <div class="col-sm-12">
+                            @Html.Label("HomePage")
+                            <div class="input-group">
+                                <div class="input-group-addon"><i class="fa fa-globe"></i></div>
+                                @Html.TextBox("homePage", Model.HomePage, new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group " style="float:right;padding-top:10px;padding-right:15px;">
+                        <button type="submit" class="btn btn-primary mb-5" name=""><div class="fa fa-save"></div> Save</button>
+                        <a href="~/Supplier" class="btn btn-danger mb-5" name=""><div class="fa fa-remove"></div> Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

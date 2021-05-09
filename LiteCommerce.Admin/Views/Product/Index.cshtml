@@ -1,0 +1,174 @@
+﻿@model LiteCommerce.Admin.Models.ProductPaginationResult
+@{
+    ViewBag.Title = "Manage products";
+    ViewBag.SmallTitle = "List, add, edit and delete products";
+    ViewBag.Manage = "Catalog";
+    ViewBag.ManageDetail = "Products";
+    int i = 1;
+}
+
+<div class="box box-default">
+    <form action="~/Product" method="get">
+        <div class="input-group input-group-sm">
+            @Html.DropDownListFor(m => m.SearchSupplier, SelectListHelper.ListOfSuppliers(), "-- All Supplier --", new { @class = "form-control select2 select2-hidden-accessible", @style = "width:475px" })
+            @Html.DropDownListFor(m => m.SearchCategory, SelectListHelper.ListOfCategories(), "-- All Category --", new { @class = "form-control select2 select2-hidden-accessible", @style = "width:475px" })
+            @Html.DropDownListFor(m => m.SearchPrice, SelectListHelper.ListOfPrices(), "-- All price --", new { @class = "form-control select2 select2-hidden-accessible", @style = "width:475px" })
+            <input type="text" class="form-control" style="width:475px;" placeholder="Search" name="searchValue" value="@Model.SearchValue">
+            <button style="border-radius:5px; height:30px; width:37px;" type="submit" class="btn btn-info btn-flat"><div style="display:block;" class="fa fa-search"></div></button>
+        </div>
+    </form>
+</div>
+<div class="box box-primary">
+    <!-- /.box-header -->
+    <form action="~/Product/Delete" method="post">
+        <div class="box-body">
+            <h3 style="float: right;" class="box-title">
+                <button onclick="return confirm('Do you really want to delete these products?')" class="btn btn-danger mr-3"
+                        type="submit">
+                    Delete Products
+                </button>
+            </h3>
+            <h3 style="float: right; padding-right:5px;" class="box-title">
+                <a class="btn btn-success mr-3"
+                   href="~/Product/Input">Add product</a>
+            </h3>
+            <div style="padding-top:25px;">
+                There are @Model.RowCount product, Page @Model.Page/@Model.PageCount
+            </div>
+            <table id="example1" class="table table-bordered table-striped">
+
+                <thead>
+                    <tr>
+                        <th><input type="checkbox" id="selectAll" /></th>
+                        <th>#</th>
+                        <th>Product name</th>
+                        <th>Image</th>
+                        <th>Supplier</th>
+                        <th>Category</th>
+                        <th>Quantity per unit</th>
+                        <th>Unit price</th>
+                        <th width="100px">Decriptions</th>
+                        <th style="text-align: center;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.DataProduct)
+                    {
+                        <tr>
+                            <td><input type="checkbox" name="productIDs" value="@item.ProductID" /></td>
+                            <td>@(i++)</td>
+                            <td>@item.ProductName</td>
+                            <td><img class="profile-user-img img-responsive img-circle" src="@item.PhotoPath" alt="User profile picture"></td>
+                            <td>@item.SupplierName</td>
+                            <td>@item.CategoryName</td>
+                            <td>@item.QuantityPerUnit</td>
+                            <td>@item.UnitPrice</td>
+                            <td>@item.Descriptions</td>
+                            <td style="text-align: center;">
+                                <div class="d-flex justify-content-center align-items-center">
+                                    <a href="~/Product/Input/@item.ProductID" class="btn btn-success mr-3"><i class="fa fa-edit"></i></a>
+                                    <a class="btn btn-info" data-toggle="modal" data-target="#ProductAttribute"><i class="fa fa-info-circle"></i></a>
+                                    <a onclick="return confirm('Do you really want to delete this supplier?');"
+                                       class="btn btn-danger"><i class="fa fa-remove"></i></a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <ul class="pagination pagination-sm no-margin pull-right">
+
+                @if (Model.Page > 1)
+                {
+                    <li><a href="~/Product?page=@(Model.Page-1)&searchValue=@Model.SearchValue&searchSupplier=@Model.SearchSupplier&searchCategory=@Model.SearchCategory&searchPrice=@Model.SearchPrice">«</a></li>
+                }
+                else
+                {
+                    <li class="hide"><a>«</a></li>
+                }
+                @if (Model.PageCount <= 5)
+                {
+                    for (int page = Model.Page; page <= Model.PageCount; page++)
+                    {
+                        <li><a href="~/Product?page=@page&searchValue=@Model.SearchValue&searchSupplier=@Model.SearchSupplier&searchCategory=@Model.SearchCategory&searchPrice=@Model.SearchPrice">@page</a></li>
+                    }
+                }
+                else
+                if (Model.Page == Model.PageCount || Model.Page == Model.PageCount - 1)
+                {
+                    for (int page = (Model.PageCount - 4); page <= Model.PageCount; page++)
+                    {
+
+                        <li><a href="~/Product?page=@page&searchValue=@Model.SearchValue&searchSupplier=@Model.SearchSupplier&searchCategory=@Model.SearchCategory&searchPrice=@Model.SearchPrice">@page</a></li>
+
+                    }
+                }
+                else
+                {
+                    if (Model.Page > 2)
+                    {
+                        for (int page = Model.Page - 2; page <= (Model.Page + 2); page++)
+                        {
+                            <li><a href="~/Product?page=@page&searchValue=@Model.SearchValue&searchSupplier=@Model.SearchSupplier&searchCategory=@Model.SearchCategory&searchPrice=@Model.SearchPrice">@page</a></li>
+                        }
+                    }
+                    else
+                    {
+                        for (int page = Model.Page; page <= (Model.Page + 4); page++)
+                        {
+                            <li><a href="~/Product?page=@page&searchValue=@Model.SearchValue&searchSupplier=@Model.SearchSupplier&searchCategory=@Model.SearchCategory&searchPrice=@Model.SearchPrice">@page</a></li>
+                        }
+                    }
+                }
+                @if (Model.Page < Model.PageCount)
+                {
+                    <li><a href="~/Product?page=@(Model.Page+1)&searchValue=@Model.SearchValue&searchSupplier=@Model.SearchSupplier&searchCategory=@Model.SearchCategory&searchPrice=@Model.SearchPrice">»</a></li>
+                }
+                else
+                {
+                    <li class="hidden"><a>»</a></li>
+                }
+            </ul>
+        </div>
+    </form>
+    <!-- /.box-body -->
+</div>
+<div class="modal fade" id="ProductAttribute" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="myModalLabel">Product Attributes</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Value</th>
+                            <th>Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Height</td>
+                            <td>20</td>
+                        </tr>
+                        <tr>
+                            <td>Width</td>
+                            <td>50</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
